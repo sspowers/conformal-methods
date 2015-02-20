@@ -40,16 +40,19 @@ run.simu.inner = function(parameters) {
     pred1 = conformal(data$xTrain, data$yTrain, data$xTest,
         alpha = alpha, beta = alpha)
     pred2 = conformalNew(data$xTrain, data$yTrain, data$xTest,
-        alpha = alpha, beta = (1-alpha)/2)
-    pred3 = conformalNew(data$xTrain, data$yTrain, data$xTest,
         alpha = alpha, beta = (1-alpha)^2/2)
+    pred3 = conformalNew(data$xTrain, data$yTrain, data$xTest,
+        alpha = alpha, beta = (1-alpha)^3/2)
     pred4 = conformalNew(data$xTrain, data$yTrain, data$xTest,
-        alpha = alpha, beta = sqrt(1-alpha)/2)
+        alpha = alpha, beta = 0.5)
+    pred5 = conformalNew(data$xTrain, data$yTrain, data$xTest,
+        alpha = alpha, beta = 0.4)
 
     c(evaluation(pred1, data$yTest, data$y),
         evaluation(pred2, data$yTest, data$y),
         evaluation(pred3, data$yTest, data$y),
-        evaluation(pred4, data$yTest, data$y))
+        evaluation(pred4, data$yTest, data$y),
+        evaluation(pred5, data$yTest, data$y))
 }
 
 # wrapper
