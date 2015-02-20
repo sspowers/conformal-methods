@@ -285,7 +285,7 @@ for (i in range) {
 }
 resultsMean = apply(resultsTotal, 1:2, mean)
 
-pdf('figs/simulation-10.pdf', width = 14)
+pdf('figs/simulation-10.pdf')
 plot(resultsMean[, 1], resultsMean[, 2], type = 'l',
     xlim = c(0, 1), xlab = 'Rejection rate on original classes',
     ylim = c(0, 1), ylab = 'Rejection rate on new class')
