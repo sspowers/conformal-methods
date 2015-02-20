@@ -291,7 +291,7 @@ plot(resultsMean[, 1], resultsMean[, 2], type = 'l',
     ylim = c(0, 1), ylab = 'Rejection rate on new class')
 legend('bottomright', legend = 1:5, col = 1:5, lty = 1:5)
 for (i in 1:4) {
-    lines(resultsMean[, 4*i+1], resultsMean[, 4*i+2], col = i, lty = i)
+    lines(resultsMean[, 4*i+1], resultsMean[, 4*i+2], col = i+1, lty = i+1)
 }
 dev.off()
 
