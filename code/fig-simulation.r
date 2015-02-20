@@ -298,7 +298,7 @@ dev.off()
 pdf('figs/simulation-10-coverage.pdf')
 matplot(0:20/20, resultsMean[, 1:5*4-1], type = 'l', xlab = 'alpha',
     ylab = 'Coverage rate', main = 'Original classes')
-legend('topleft', legend = 1:5, col = 1:5, lty = 1:5)
+legend('bottomleft', legend = 1:5, col = 1:5, lty = 1:5)
 dev.off()
 
 
