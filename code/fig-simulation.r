@@ -237,3 +237,27 @@ lines(resultsMean[, 18], resultsMean[, 20], type = 'l', lty = 5, col = 5)
 dev.off()
 
 
+
+# ninth simulation
+range = 100:109
+load(paste('data/solomon/simulation', range[1], '.RData', sep = ''))
+resultsTotal = array(NA, dim = c(nrow(results), ncol(results), length(range)))
+for (i in range) {
+    load(paste('data/solomon/simulation', i , '.RData', sep = ''))
+    resultsTotal[, , i + 1 - min(range)] = as.matrix(results)
+}
+resultsMean = apply(resultsTotal, 1:2, mean)
+
+pdf('figs/simulation-9.pdf', width = 14)
+
+par(mfrow = c(1, 2))
+matplot(2^(1:12), resultsMean[, 1:5*4-3], type = 'l', xlab = 'Dimension',
+    ylab = 'Rejection rate', main = 'Rejection rate on old classes')
+legend('bottomright',
+    c('a=.05', 'a=.05,b=.45', 'a=.05,b=.43', 'a=.05,b=.5', 'a=.05,b=.4'),
+    col = 1:5, lty = 1:5)
+matplot(2^(1:12), resultsMean[, 1:5*4-2], type = 'l', xlab = 'Dimension',
+    ylab = 'Rejection rate', main = 'Rejection rate on new class')
+
+dev.off()
+
