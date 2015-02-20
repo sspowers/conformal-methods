@@ -52,7 +52,7 @@ conformal = function(xTrain, yTrain, xTest, alpha = 0.01, beta = 0.5) {
     rxyMax = apply(rxy, 1, max)
     rxyMin = apply(rxy, 1, min)
     pred[rxyMax < alpha] = NA
-    pred[rxyMin > beta] = NA
+    pred[rxyMin >= beta] = NA
     pred
 }
 
