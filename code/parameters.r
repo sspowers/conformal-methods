@@ -5,7 +5,7 @@
 
 parameters = list()
 
-for (i in 1:20) {
+for (i in 1:21) {
     parameters[[i]] = list(
         alpha = (i-1)/20,
         m = 10000,

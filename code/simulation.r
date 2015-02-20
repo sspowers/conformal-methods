@@ -4,7 +4,6 @@
 # Code to be run on individual mapper nodes
 
 # remember to import packages inside the mapper
-source('code/customizeTraining.r')
 source('code/rejectionMethods.r')
 source('code/util.r')
 
