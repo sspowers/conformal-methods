@@ -31,6 +31,14 @@ conformal = function(xTrain, yTrain, xTest, alpha = 0.01, beta = 0.5) {
     px1 = dnorm(xTrain[, 1], mean = mean(xTrain[yTrain == 1, 1]),
         sd = sd(xTrain[yTrain == 1, 1]))*dnorm(xTrain[, 2],
         mean = mean(xTrain[yTrain == 1, 2]), sd = sd(xTrain[yTrain == 1, 2]))
+
+    lpx1 = rowSums(log(dnorm(scale(xTrain[yTrain == 1, ])))) + log(py[1])
+    lpx2 = rowSums(log(dnorm(scale(xTrain[yTrain == 2, ])))) + log(py[2])
+
+    temp = array(NA, nrow(xTrain))
+    temp[yTrain == 1] = exp(-lpx1)
+    temp[yTrain == 2] = exp(-lpx2)
+
     px2 = dnorm(xTrain[, 1], mean = mean(xTrain[yTrain == 2, 1]),
         sd = sd(xTrain[yTrain == 2, 1]))*dnorm(xTrain[, 2],
         mean = mean(xTrain[yTrain == 2, 2]), sd = sd(xTrain[yTrain == 2, 2]))
