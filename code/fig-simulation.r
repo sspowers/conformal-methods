@@ -265,7 +265,7 @@ dev.off()
 
 pdf('figs/simulation-9-coverage.pdf')
 matplot(log(2^(1:12)), resultsMean[, 1:5*4-1], type = 'l', xlab = 'Dimension',
-    ylab = 'Coverage rate', main = 'Coverage rate on original classes',
+    ylab = 'Coverage rate', main = 'Original classes (alpha = .05, vary p)',
     axes = FALSE)
 legend('bottomleft', legend =
     c('a=.05', 'a=.05,b=.45', 'a=.05,b=.43', 'a=.05,b=.5', 'a=.05,b=.4'),
@@ -297,7 +297,7 @@ dev.off()
 
 pdf('figs/simulation-10-coverage.pdf')
 matplot(0:20/20, resultsMean[, 1:5*4-1], type = 'l', xlab = 'alpha',
-    ylab = 'Coverage rate', main = 'Original classes')
+    ylab = 'Coverage rate', main = 'Original classes (p = 2, vary alpha)')
 legend('bottomleft', legend = 1:5, col = 1:5, lty = 1:5)
 dev.off()
 
