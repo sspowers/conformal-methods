@@ -1,22 +1,16 @@
 require('e1071')
 
 evaluation = function(pred, yTest, y) {
-    error12 = sum((pred != yTest)[y[, 3] == 0], na.rm = TRUE)/sum(y[, 3] == 0)
-    reject12 = mean(is.na(pred)[y[, 3] == 0])
-    error3 = sum((pred != yTest)[y[, 3] == 1], na.rm = TRUE)/sum(y[, 3] == 1)
-    reject3 = mean(is.na(pred)[y[, 3] == 1])
-    return(c(error12, reject12, error3, reject3))
+    reject12 = mean((pred == 0 | pred == 3)[y[, 3] == 0])
+    reject3 = mean((pred == 0 | pred == 3)[y[, 3] == 1])
+    coverage12 = mean(((pred == 3) | (pred == yTest))[y[, 3] == 0])
+    coverage3 = mean(((pred == 3) | (pred == yTest))[y[, 3] == 1])
+    return(c(reject12, reject3, coverage12, coverage3))
 }
 
 simData = function(m = 100, n = 1000, p = 2,
 	piTrain = c(0.5, 0.5, 0.0), piTest = c(0.4, 0.4, 0.2),
 	sigmaX = 1, sigmaY = 1) {
-
-    m = 100
-    n = 1000
-    p = 2
-    piTrain = c(0.5, 0.5, 0.0)
-    piTest = c(0.4, 0.4, 0.2)
 
     mu = sigmaY*matrix(rnorm(3*p), ncol = p)
 #    sigma = sqrt(exp(matrix(rnorm(3*p), ncol = p)))

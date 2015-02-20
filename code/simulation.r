@@ -56,7 +56,7 @@ run.simu.inner = function(parameters) {
 }
 
 # wrapper
-run.simu = function(parameters, nrep = 1000) {
+run.simu = function(parameters, nrep = 100) {
 	
 	results = replicate(nrep, run.simu.inner(parameters))
 	

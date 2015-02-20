@@ -49,8 +49,8 @@ conformal = function(xTrain, yTrain, xTest, alpha = 0.01, beta = 0.5) {
     pred = apply(rxy, 1, which.max)
     rxyMax = apply(rxy, 1, max)
     rxyMin = apply(rxy, 1, min)
-    pred[rxyMax < alpha] = NA
-    pred[rxyMin >= beta] = NA
+    pred[rxyMax < alpha] = 0
+    pred[rxyMin >= beta] = 3
     pred
 }
 
@@ -78,8 +78,8 @@ conformalNew = function(xTrain, yTrain, xTest, alpha = 0.01, beta = 0.4) {
 
     pred = apply(rxy, 1, which.max)
     rxyMax = apply(rxy, 1, max)
-    pred[rxyMax < alpha] = NA
-    pred[apply(pxyTest/rowSums(pxyTest), 1, min) > beta] = NA
+    pred[rxyMax < alpha] = 0
+    pred[apply(pxyTest/rowSums(pxyTest), 1, min) > beta] = 3
     pred
 }
 
