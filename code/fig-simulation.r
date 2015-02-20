@@ -249,7 +249,6 @@ for (i in range) {
 resultsMean = apply(resultsTotal, 1:2, mean)
 
 pdf('figs/simulation-9.pdf', width = 14)
-
 par(mfrow = c(1, 2))
 matplot(log(2^(1:12)), resultsMean[, 1:5*4-3], type = 'l', xlab = 'Dimension',
     ylab = 'Rejection rate', main = 'Rejection rate on old classes', axes = F)
@@ -262,6 +261,19 @@ matplot(log(2^(1:12)), resultsMean[, 1:5*4-2], type = 'l', xlab = 'Dimension',
     ylab = 'Rejection rate', main = 'Rejection rate on new class', axes = F)
 axis(1, log(2^(1:12)), 2^(1:12))
 axis(2)
-
 dev.off()
+
+pdf('figs/simulation-9-coverage.pdf')
+matplot(log(2^(1:12)), resultsMean[, 1:5*4-1], type = 'l', xlab = 'Dimension',
+    ylab = 'Coverage rate', main = 'Coverage rate on original classes',
+    axes = FALSE)
+legend('bottomright',
+    c('a=.05', 'a=.05,b=.45', 'a=.05,b=.43', 'a=.05,b=.5', 'a=.05,b=.4'),
+    col = 1:5, lty = 1:5)
+axis(1, log(2^(1:12)), 2^(1:12))
+axis(2)
+dev.off()
+
+
+
 
