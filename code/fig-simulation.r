@@ -194,3 +194,24 @@ lines(resultsMean[, 14], resultsMean[, 16], type = 'l', lty = 4, col = 4)
 dev.off()
 
 
+# seventh simulation
+numMethods = 4
+range = 80:89
+resultsTotal = array(NA, dim = c(21, 4*numMethods, length(range)))
+for (i in range) {
+    load(paste('data/solomon/simulation', i , '.RData', sep = ''))
+    resultsTotal[, , i + 1 - min(range)] = as.matrix(results)
+}
+resultsMean = apply(resultsTotal, 1:2, mean)
+
+pdf('figs/simulation-7.pdf')
+
+plot(resultsMean[, 2], resultsMean[, 4], type = 'l', lty = 1, col = 1,
+ xlim = c(0, 1), ylim = c(0, 1))
+lines(resultsMean[, 6], resultsMean[, 8], type = 'l', lty = 2, col = 2)
+lines(resultsMean[, 10], resultsMean[, 12], type = 'l', lty = 3, col = 3)
+lines(resultsMean[, 14], resultsMean[, 16], type = 'l', lty = 4, col = 4)
+
+dev.off()
+
+
