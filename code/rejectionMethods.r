@@ -27,27 +27,25 @@ distance = function(xTrain, yTrain, xTest) {
 }
 
 conformal = function(xTrain, yTrain, xTest, alpha = 0.01, beta = 0.5) {
+
     py = table(yTrain)/length(yTrain)
-    px1 = dnorm(xTrain[, 1], mean = mean(xTrain[yTrain == 1, 1]),
-        sd = sd(xTrain[yTrain == 1, 1]))*dnorm(xTrain[, 2],
-        mean = mean(xTrain[yTrain == 1, 2]), sd = sd(xTrain[yTrain == 1, 2]))
-    px2 = dnorm(xTrain[, 1], mean = mean(xTrain[yTrain == 2, 1]),
-        sd = sd(xTrain[yTrain == 2, 1]))*dnorm(xTrain[, 2],
-        mean = mean(xTrain[yTrain == 2, 2]), sd = sd(xTrain[yTrain == 2, 2]))
-    pxy = t(rbind(px1, px2) * as.vector(py))
-    Rtrain = 1/rowSums(model.matrix(~ as.factor(yTrain) - 1)*pxy)
+
+    lpx1 = rowSums(log(dnorm(scale(xTrain[yTrain == 1, ])))) + log(py[1])
+    lpx2 = rowSums(log(dnorm(scale(xTrain[yTrain == 2, ])))) + log(py[2])
+    Rtrain = array(NA, nrow(xTrain))
+    Rtrain[yTrain == 1] = exp(-lpx1)
+    Rtrain[yTrain == 2] = exp(-lpx2)
     Rcdf = ecdf(Rtrain)
 
-    px1test = dnorm(xTest[, 1], mean = mean(xTrain[yTrain == 1, 1]),
-        sd = sd(xTrain[yTrain == 1, 1]))*dnorm(xTest[, 2],
-        mean = mean(xTrain[yTrain == 1, 2]), sd = sd(xTrain[yTrain == 1, 2]))
-    px2test = dnorm(xTest[, 1], mean = mean(xTrain[yTrain == 2, 1]),
-        sd = sd(xTrain[yTrain == 2, 1]))*dnorm(xTest[, 2],
-        mean = mean(xTrain[yTrain == 2, 2]), sd = sd(xTrain[yTrain == 2, 2]))
-    pxyTest = t(rbind(px1test, px2test) * as.vector(py))
-    Rtest = 1/pxyTest
-    rxy = 1 - apply(Rtest, 2, Rcdf)
+    lpx1test = rowSums(log(dnorm(scale(xTest,
+        center = colMeans(xTrain[yTrain == 1, ]),
+        scale = apply(xTrain[yTrain == 1, ], 2, sd))))) + log(py[1])
+    lpx2test = rowSums(log(dnorm(scale(xTest,
+        center = colMeans(xTrain[yTrain == 2, ]),
+        scale = apply(xTrain[yTrain == 2, ], 2, sd))))) + log(py[2])
+    Rtest = exp(-cbind(lpx1test, lpx2test))
 
+    rxy = 1 - apply(Rtest, 2, Rcdf)
     pred = apply(rxy, 1, which.max)
     rxyMax = apply(rxy, 1, max)
     rxyMin = apply(rxy, 1, min)
